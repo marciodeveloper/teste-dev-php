@@ -1,66 +1,256 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Projeto de API Rest para Cadastro de Fornecedores
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é uma API Restful desenvolvida em Laravel 10, que permite o cadastro, consulta, atualização e exclusão de fornecedores, permitindo a busca por CNPJ ou CPF. A API também integra com a [BrasilAPI](https://brasilapi.com.br/) para busca de informações de CNPJ.
 
-## About Laravel
+## Tecnologias Utilizadas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   PHP 8.1 ou superior
+-   Laravel 10.x
+-   MySQL 8.0 ou PostgreSQL
+-   Composer
+-   Docker (opcional)
+-   Redis (opcional, para cache)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   PHP 8.1 ou superior com as extensões:
+    -   OpenSSL
+    -   PDO
+    -   Mbstring
+    -   Tokenizer
+    -   XML
+    -   cURL
+-   Composer
+-   Banco de Dados: MySQL ou PostgreSQL
+-   Node.js e NPM (opcional, se for utilizar recursos de frontend)
+-   Docker e Docker Compose (opcional, para ambiente dockerizado)
 
-## Learning Laravel
+## Instalação
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Clonando o Repositório
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Faça o clone do repositório para a sua máquina local:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone https://github.com/marciodeveloper/teste-dev-php.git
+```
 
-## Laravel Sponsors
+### Navegue até o diretório do projeto:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+cd teste-dev-php
+```
 
-### Premium Partners
+## Instalando as Dependências do Composer
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+composer install
+```
 
-## Contributing
+## Configuração
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Arquivo `.env`
 
-## Code of Conduct
+Copie o arquivo `.env.example` para `.env`:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+cp .env.example .env
+```
 
-## Security Vulnerabilities
+Gere a chave da aplicação:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan key:generate
+```
 
-## License
+## Configurando o Banco de Dados
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Edite o arquivo `.env` e configure as informações do seu banco de dados:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=projeto_fornecedores
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+```
+
+Crie o banco de dados com o nome especificado (projeto_fornecedores).
+
+## Execução
+
+### Executando as Migrações
+
+```bash
+php artisan migrate
+```
+
+### Iniciando o Servidor de Desenvolvimento
+
+```bash
+php artisan serve
+```
+
+A aplicação estará disponível em `http://localhost:8000`.
+
+## Rotas da API
+
+## Endpoints Disponíveis
+
+### Fornecedores
+
+-   GET `/api/fornecedores` - Lista paginada de fornecedores
+
+    -   Parâmetros de Query (opcionais):
+        -   `nome`: Filtra fornecedores pelo nome.
+        -   `tipo_documento`: Filtra por 'CPF' ou 'CNPJ'.
+        -   `ordenarPor`: Campo para ordenação.
+        -   `ordem`: Direção da ordenação ('asc' ou 'desc').
+        -   `page`: Número da página.
+
+-   GET /api/fornecedores/{id} - Detalhes de um fornecedor específico
+-   POST /api/fornecedores - Cria um novo fornecedor
+    -   Campos obrigatórios no corpo da requisição:
+        -   `nome`: string
+        -   `documento`: string (CPF ou CNPJ válido)
+        -   `tipo_documento`: 'CPF' ou 'CNPJ'
+    -   Campos opcionais:
+        -   `email`: string (email válido)
+        -   `telefone`: string
+        -   `endereco`: string
+-   PUT `/api/fornecedores/{id}` - Atualiza um fornecedor existente
+    -   Mesmos campos do POST
+-   DELETE `/api/fornecedores/{id}` - Exclui um fornecedor
+
+### Busca por Documento
+
+-   GET `/api/fornecedores/busca/{documento}` - Busca um fornecedor pelo CPF ou CNPJ
+    -   Se o fornecedor estiver cadastrado, retorna seus dados.
+    -   Se for um CNPJ válido e não estiver cadastrado, busca as informações na BrasilAPI.
+    -   Se for um CPF, retorna mensagem informando que a consulta de CPF não é suportada.
+    -   Se o documento for inválido, retorna mensagem de erro.
+
+## Exemplo de Requisição
+
+### Criar um Fornecedor
+
+```bash
+POST /api/fornecedores
+Content-Type: application/json
+
+{
+  "nome": "Empresa ABC",
+  "documento": "12345678000199",
+  "tipo_documento": "CNPJ",
+  "email": "contato@empresaabc.com",
+  "telefone": "(11) 98765-4321",
+  "endereco": "Rua das Flores, 100"
+}
+```
+
+### Resposta de Sucesso (201 Created)
+
+```json
+{
+    "id": 1,
+    "nome": "Empresa ABC",
+    "documento": "12345678000199",
+    "tipo_documento": "CNPJ",
+    "email": "contato@empresaabc.com",
+    "telefone": "(11) 98765-4321",
+    "endereco": "Rua das Flores, 100",
+    "created_at": "2023-10-01T12:34:56.000000Z",
+    "updated_at": "2023-10-01T12:34:56.000000Z"
+}
+```
+
+## Testes Automatizados
+
+### Executando os Testes
+
+Os testes automatizados foram implementados para garantir o funcionamento correto das funcionalidades da API.
+
+Execute os testes com o seguinte comando:
+
+```bash
+php artisan test
+```
+
+Os testes incluem:
+
+-   Testes de Unidade: Verificação das validações e lógica de negócio.
+-   Testes de Feature: Testes das rotas da API e respostas esperadas.
+
+## Dockerização do Ambiente
+
+### Pré-requisitos
+
+-   Docker
+-   Docker Compose
+
+### Configuração
+
+Edite o arquivo `.env` e atualize as seguintes variáveis:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=projeto_fornecedores
+DB_USERNAME=root
+DB_PASSWORD=senha
+```
+
+### Iniciando os Contêineres
+
+Execute o comando:
+
+```bash
+docker-compose up -d
+```
+
+Os serviços configurados são:
+
+-   app: Aplicação Laravel rodando em PHP 8.2
+-   db: Banco de dados MySQL 8.0
+-   redis: Servidor Redis para cache (opcional)
+
+## Executando as Migrações no Contêiner
+
+```bash
+docker-compose exec app php artisan migrate
+```
+
+## Acessando a Aplicação
+
+A aplicação estará disponível em `http://localhost:8000`.
+
+## Cache
+
+O cache foi implementado utilizando o driver configurado em CACHE_DRIVER no arquivo .env. Por padrão, está configurado para usar o file.
+
+Para utilizar o Redis, atualize as configurações:
+
+```env
+CACHE_DRIVER=redis
+REDIS_HOST=redis
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+```
+
+## Considerações Finais
+
+-   Validação de Documentos: Foi implementado um helper para validar CPF e CNPJ, garantindo a integridade dos dados.
+-   Repository Pattern: Utilizado para desacoplar a lógica de acesso a dados dos controladores, facilitando a manutenção e testes.
+-   Padrões de Desenvolvimento: Seguem as boas práticas recomendadas pela comunidade Laravel, incluindo o uso de migrations, rotas organizadas e tratamento adequado de erros.
+-   Segurança: As entradas do usuário são validadas cuidadosamente para evitar vulnerabilidades.
+-   Documentação: Este README fornece todas as informações necessárias para instalação, configuração e uso da aplicação.
+
+## Contato
+
+**E-mail:** <jose.barthem@gmail.com>
+
+**Celular:** (41) 98473-7903
+
+Estou à disposição para quaisquer dúvidas ou esclarecimentos.
